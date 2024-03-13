@@ -1,6 +1,5 @@
 <template>
-  <body>
-    <Navbar />
-    <slot />
-  </body>
+
+  <Navbar />
+  <slot />
 </template>

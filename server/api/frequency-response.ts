@@ -1,4 +1,6 @@
 import { parse } from "@fast-csv/parse";
+import headphones from "./headphones";
+import iems from "./iems";
 
 interface FrequencyResponse {
 	frequency: number;
@@ -7,10 +9,16 @@ interface FrequencyResponse {
 
 export default defineEventHandler(async (event) => {
 	const params = getQuery(event);
-	if (!params.brand || !params.model || !params.measurer || !params.type) {
-		return { error: "brand, model, type and measurer are required parameters" };
+	if (!params.brand || !params.model) {
+		return { error: "brand and model are required parameters" };
 	}
-	const filename = `${Bun.env.PWD}/AutoEQ/measurements/${params.measurer}/data/${params.type}/${params.brand} ${params.model}.csv`;
+	const allDevices = headphones(event)
+		.headphones.map((h) => ({ ...h, type: "over-ear" }))
+		.concat(iems(event).iems.map((i) => ({ ...i, type: "in-ear" })));
+	const device = allDevices.find(
+		(d) => d.brand === params.brand && d.model === params.model,
+	);
+	const filename = `${Bun.env.PWD}/AutoEQ/measurements/${device.measurers[0]}/data/${device.type}/${device.brand} ${device.model}.csv`;
 	let file = undefined;
 	const data: unknown[] = [];
 	try {

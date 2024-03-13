@@ -1,44 +1,5 @@
 import { readdirSync } from "fs";
-
-const BRANDS = [
-	"Abyss",
-	"Adam",
-	"AIAIAI",
-	"AKG",
-	"Allen & Heath",
-	"Anker",
-	"Apple",
-	"Audeze",
-	"Audient",
-	"Audio-Technica",
-	"Bang & Olufsen",
-	"Beats",
-	"Beyerdynamic",
-	"Creative",
-	"Dan Clark Audio",
-	"Denon",
-	"Focal",
-	"Fostex",
-	"Grado",
-	"HEDD",
-	"HIFIMAN",
-	"Koss",
-	"Meze",
-	"Monoprice",
-	"Moondrop",
-	"Neumann",
-	"Philips",
-	"Sennheiser",
-	"Shure",
-	"Superlux",
-	"Skullcandy",
-	"Sony",
-	"Stax",
-	"V-MODA",
-	"Warwick Acoustics",
-	"Yamaha",
-	"ZMF",
-];
+import { BRANDS_HEADPHONE } from "~/shared/constants";
 
 interface Headphone {
 	brand: string;
@@ -61,7 +22,7 @@ export default defineEventHandler((event) => {
 			continue;
 		}
 		for (const measurementFile of overEarDir) {
-			for (const brand of BRANDS) {
+			for (const brand of BRANDS_HEADPHONE) {
 				if (measurementFile.startsWith(brand)) {
 					const model = measurementFile.slice(brand.length + 1, -4);
 					if (headphones.has(model)) {

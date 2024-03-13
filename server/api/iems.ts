@@ -1,52 +1,5 @@
 import { readdirSync } from "fs";
-
-const BRANDS = [
-	"64 Audio",
-	"7Hz",
-	"7th Acoustics",
-	"AFUL",
-	"Apple",
-	"Audeze",
-	"BGVP",
-	"Campfire Audio",
-	"Cayin",
-	"CCA",
-	"DUNU",
-	"Empire Ears",
-	"Etymotic",
-	"FiiO",
-	"Final Audio",
-	"Hidition",
-	"HIFIMAN",
-	"JVC",
-	"Kiwi Ears",
-	"KZ",
-	"Massdrop",
-	"MEE Audio",
-	"Monoprice",
-	"Moondrop",
-	"Nothing",
-	"Prisma Audio",
-	"qdc",
-	"Samsung",
-	"Sennheiser",
-	"Shanling",
-	"Shozy",
-	"Shuoer",
-	"Shure",
-	"Simgot",
-	"Sony",
-	"Symphonium Audio",
-	"Tanchjim",
-	"ThieAudio",
-	"Tin HiFi",
-	"Tripowin",
-	"Truthear",
-	"Unique Melody",
-	"Vision Ears",
-	"VSonic",
-	"Yanyin",
-];
+import { BRANDS_IEM } from "~/shared/constants";
 
 interface IEM {
 	brand: string;
@@ -69,7 +22,7 @@ export default defineEventHandler((event) => {
 			continue;
 		}
 		for (const measurementFile of overEarDir) {
-			for (const brand of BRANDS) {
+			for (const brand of BRANDS_IEM) {
 				if (measurementFile.startsWith(brand)) {
 					const model = measurementFile.slice(brand.length + 1, -4);
 					if (iems.has(model)) {
