@@ -18,6 +18,9 @@ export default defineEventHandler(async (event) => {
 	const device = allDevices.find(
 		(d) => d.brand === params.brand && d.model === params.model,
 	);
+	if (!device) {
+		return { error: "Device not found" };
+	}
 	const filename = `${Bun.env.PWD}/AutoEQ/measurements/${device.measurers[0]}/data/${device.type}/${device.brand} ${device.model}.csv`;
 	let file = undefined;
 	const data: unknown[] = [];
